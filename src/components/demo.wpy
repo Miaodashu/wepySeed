@@ -1,0 +1,51 @@
+<template>
+  <view>
+    <view>demo</view>
+    <repeat  for="{{list}}" key="index" index="index" item="item">
+      <text>{{item.name}}</text>
+    </repeat>
+    <view>{{hot}}</view>
+    <button @tap="handleClick">子集点击</button>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  export default class Demo extends wepy.component {
+    props = {
+      list: {
+        type: Array,
+        default: []
+      },
+      hot: {
+        type: Number,
+        twoWay: true
+      }
+    }
+    methods = {
+      handleClick (data) {
+        // this.$parent.ceshi = 10000
+        // this.$parent.$apply()
+        this.hot = 100003
+        return new Promise((resolve, reject) => {
+          wx.showModal({
+            title: data.title,
+            content: data.content,
+            success (res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+                resolve('hello world')
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+                resolve('用户点击取消')
+              }
+            }
+          })
+        })
+        // this.$emit('demo-click', 'shishi', this.$name)
+      }
+    }
+  }
+</script>
+<style lang="less">
+
+</style>
